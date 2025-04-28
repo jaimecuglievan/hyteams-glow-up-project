@@ -1,4 +1,3 @@
-
 import Layout from "@/components/layout/Layout";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -31,6 +30,7 @@ interface TeamMember {
   initials: string;
   avatar?: string;
   role: string;
+  workMode?: "office" | "remote" | "traveling" | "vacation";
   status?: "active" | "busy" | "away" | "offline";
   selected?: boolean;
 }
@@ -43,17 +43,16 @@ interface Team {
 }
 
 const Teams = () => {
-  // Sample team data
   const [teams, setTeams] = useState<Team[]>([
     {
       id: "1",
       name: "Madrid Front",
       description: "Frontend development team based in Madrid",
       members: [
-        { id: "1", name: "Maria Rodriguez", role: "Team Lead", initials: "MR", avatar: "https://i.pravatar.cc/150?img=1", status: "active" },
-        { id: "2", name: "Alex Sanchez", role: "Frontend Developer", initials: "AS", avatar: "https://i.pravatar.cc/150?img=2", status: "busy" },
-        { id: "3", name: "Beth Lopez", role: "UI/UX Designer", initials: "BL", avatar: "https://i.pravatar.cc/150?img=3", status: "away" },
-        { id: "4", name: "Ella Martinez", role: "QA Engineer", initials: "EM", avatar: "https://i.pravatar.cc/150?img=4", status: "offline" }
+        { id: "1", name: "Maria Rodriguez", role: "Team Lead", initials: "MR", avatar: "https://i.pravatar.cc/150?img=1", workMode: "office", status: "active" },
+        { id: "2", name: "Alex Sanchez", role: "Frontend Developer", initials: "AS", avatar: "https://i.pravatar.cc/150?img=2", workMode: "remote", status: "busy" },
+        { id: "3", name: "Beth Lopez", role: "UI/UX Designer", initials: "BL", avatar: "https://i.pravatar.cc/150?img=3", workMode: "traveling", status: "away" },
+        { id: "4", name: "Ella Martinez", role: "QA Engineer", initials: "EM", avatar: "https://i.pravatar.cc/150?img=4", workMode: "vacation", status: "offline" }
       ]
     },
     {
@@ -99,6 +98,15 @@ const Teams = () => {
       case "busy": return "bg-red-500";
       case "away": return "bg-yellow-500";
       default: return "bg-gray-400";
+    }
+  };
+
+  const getWorkModeColor = (workMode: "office" | "remote" | "traveling" | "vacation") => {
+    switch(workMode) {
+      case "office": return "border-hyteams-pink";
+      case "remote": return "border-hyteams-purple";
+      case "traveling": return "border-hyteams-green";
+      case "vacation": return "border-hyteams-yellow";
     }
   };
 
@@ -183,7 +191,12 @@ const Teams = () => {
                     {team.members.map(member => (
                       <div key={member.id} className="text-center group relative">
                         <div className="relative">
-                          <Avatar className="w-12 h-12">
+                          <Avatar 
+                            className={cn(
+                              "w-12 h-12 border-2",
+                              getWorkModeColor(member.workMode)
+                            )}
+                          >
                             {member.avatar ? (
                               <AvatarImage src={member.avatar} alt={member.name} />
                             ) : null}

@@ -3,9 +3,15 @@ import Layout from "@/components/layout/Layout";
 import Calendar from "@/components/home/Calendar";
 import TeamList from "@/components/home/TeamList";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, Clock } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { WorkModeSelector } from "@/components/planning/WorkModeSelector";
+import { useState } from "react";
 
 const Index = () => {
+  const [selectedMode, setSelectedMode] = useState<"office" | "remote" | "traveling" | "vacation">("office");
+
   return (
     <Layout>
       <div className="animate-fade-in">
@@ -27,7 +33,17 @@ const Index = () => {
           </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6">
-            <Calendar />
+            <div className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Today's Work Mode</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <WorkModeSelector selected={selectedMode} onSelect={setSelectedMode} />
+                </CardContent>
+              </Card>
+              <Calendar />
+            </div>
             <TeamList />
           </div>
         </section>
@@ -70,7 +86,5 @@ const Index = () => {
     </Layout>
   );
 }
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default Index;

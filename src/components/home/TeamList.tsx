@@ -1,8 +1,8 @@
-
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getWorkModeColor } from "@/lib/workModeColors";
 import { cn } from "@/lib/utils";
 
 interface TeamMember {
@@ -10,6 +10,7 @@ interface TeamMember {
   name: string;
   initials: string;
   avatar?: string;
+  workMode?: "office" | "remote" | "traveling" | "vacation";
   selected?: boolean;
 }
 
@@ -20,16 +21,15 @@ interface Team {
 }
 
 export default function TeamList() {
-  // Sample data
   const [teams] = useState<Team[]>([
     {
       id: "1",
       name: "Madrid Front",
       members: [
-        { id: "1", name: "Maria", initials: "MA", avatar: "https://i.pravatar.cc/150?img=1" },
-        { id: "2", name: "Alex", initials: "AL", avatar: "https://i.pravatar.cc/150?img=2" },
-        { id: "3", name: "Beth", initials: "BE", avatar: "https://i.pravatar.cc/150?img=3" },
-        { id: "4", name: "Ella", initials: "EL", avatar: "https://i.pravatar.cc/150?img=4" }
+        { id: "1", name: "Maria", initials: "MA", avatar: "https://i.pravatar.cc/150?img=1", workMode: "office" },
+        { id: "2", name: "Alex", initials: "AL", avatar: "https://i.pravatar.cc/150?img=2", workMode: "remote" },
+        { id: "3", name: "Beth", initials: "BE", avatar: "https://i.pravatar.cc/150?img=3", workMode: "traveling" },
+        { id: "4", name: "Ella", initials: "EL", avatar: "https://i.pravatar.cc/150?img=4", workMode: "vacation" }
       ]
     },
     {
@@ -87,8 +87,9 @@ export default function TeamList() {
                     <div key={member.id} className="text-center">
                       <Avatar 
                         className={cn(
-                          "w-12 h-12 cursor-pointer avatar-ring", 
-                          selectedMembers.includes(member.id) && "selected"
+                          "w-12 h-12 cursor-pointer border-2",
+                          getWorkModeColor(member.workMode),
+                          selectedMembers.includes(member.id) && "ring-2 ring-hyteams-pink ring-offset-2"
                         )}
                         onClick={() => toggleMemberSelection(member.id)}
                       >
