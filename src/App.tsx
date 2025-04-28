@@ -5,34 +5,13 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Planning from "./pages/Planning";
+import Teams from "./pages/Teams";
+import Agenda from "./pages/Agenda";
+import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
-
-// Create placeholder components for routes we haven't built yet
-const Planning = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <h1 className="text-2xl font-bold">Planning Page</h1>
-  </div>
-);
-
-const Teams = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <h1 className="text-2xl font-bold">Teams Page</h1>
-  </div>
-);
-
-const Agenda = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <h1 className="text-2xl font-bold">Agenda Page</h1>
-  </div>
-);
-
-const Profile = () => (
-  <div className="min-h-screen flex items-center justify-center">
-    <h1 className="text-2xl font-bold">Profile Page</h1>
-  </div>
-);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
